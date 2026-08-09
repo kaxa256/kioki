@@ -1,12 +1,89 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kelompok 4 — Pengumpulan Tugas</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
-</html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Cacing Kawaii — Worm.io</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="app">
+  <canvas id="gameCanvas"></canvas>
+
+  <!-- Player stat card -->
+  <div id="hud" class="plush-panel">
+    <div class="hud-name"><span class="dot offline" id="conn-dot"></span><span id="hud-username">Tamu</span></div>
+    <div class="hud-row">Skor <span class="val" id="stat-score">0</span></div>
+    <div class="hud-row">Panjang <span class="val" id="stat-length">0</span></div>
+    <div class="hud-row">Peringkat <span class="val rank-highlight" id="stat-rank">-</span></div>
+    <div class="hud-row">Waktu <span class="val" id="stat-time">00:00</span></div>
+    <div class="hud-row">Membunuh <span class="val" id="stat-kills">0</span></div>
+  </div>
+
+  <!-- Leaderboard -->
+  <div id="leaderboard" class="plush-panel">
+    <h2><span class="paw">🐾</span>Papan Peringkat</h2>
+    <ul id="leaderboard-list"></ul>
+  </div>
+
+  <!-- FPS / ping / player count strip -->
+  <div id="statline">
+    <div class="chip plush-panel"><b id="stat-fps">60</b>&nbsp;fps</div>
+    <div class="chip plush-panel"><b id="stat-ping">--</b>&nbsp;ms</div>
+    <div class="chip plush-panel">👥&nbsp;<b id="stat-online">1</b></div>
+  </div>
+
+  <!-- Minimap -->
+  <div id="minimap" class="plush-panel">
+    <canvas id="minimapCanvas"></canvas>
+  </div>
+
+  <!-- Mobile touch controls -->
+  <div id="joystick-zone"></div>
+  <div id="joystick-base"><div id="joystick-stick"></div></div>
+  <button id="boost-btn">BOOST</button>
+
+  <!-- Start screen -->
+  <div id="start-screen" class="overlay">
+    <div class="card plush-panel">
+      <svg class="mascot" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="25" cy="22" r="13" fill="#4A3238"/>
+        <circle cx="75" cy="22" r="13" fill="#4A3238"/>
+        <circle cx="25" cy="22" r="7" fill="#FFFDFB"/>
+        <circle cx="75" cy="22" r="7" fill="#FFFDFB"/>
+        <circle cx="50" cy="55" r="38" fill="#FBF1E7" stroke="#E8B9BC" stroke-width="3"/>
+        <circle cx="34" cy="50" r="4" fill="#4A3238"/>
+        <circle cx="66" cy="50" r="4" fill="#4A3238"/>
+        <ellipse cx="50" cy="62" rx="4" ry="3" fill="#4A3238"/>
+        <circle cx="20" cy="62" r="5" fill="#F3D9D6"/>
+        <circle cx="80" cy="62" r="5" fill="#F3D9D6"/>
+        <path d="M30 78 Q50 90 70 78" stroke="#C0524A" stroke-width="6" fill="none" stroke-linecap="round"/>
+      </svg>
+      <h1>Cacing Kawaii</h1>
+      <p class="sub">Makan, tumbuh, kalahkan pemain lain. Live leaderboard real-time.</p>
+      <input id="username-input" type="text" maxlength="14" placeholder="Nama pengguna kamu">
+      <button class="btn-primary" id="play-btn">Main Sekarang</button>
+      <div class="mode-note"><span class="dot" id="server-dot" style="width:7px;height:7px;border-radius:50%;background:#B9B9C6;display:inline-block;"></span><span id="server-status-text">Menghubungkan ke server...</span></div>
+    </div>
+  </div>
+
+  <!-- Death / results screen -->
+  <div id="death-screen" class="overlay hidden">
+    <div class="card plush-panel">
+      <h1 id="death-title">Kamu Kalah!</h1>
+      <div class="death-stats">
+        <div class="death-stat"><span class="n" id="death-score">0</span><span class="l">Skor</span></div>
+        <div class="death-stat"><span class="n" id="death-length">0</span><span class="l">Panjang</span></div>
+        <div class="death-stat"><span class="n" id="death-rank">-</span><span class="l">Peringkat</span></div>
+        <div class="death-stat"><span class="n" id="death-time">00:00</span><span class="l">Bertahan</span></div>
+      </div>
+      <button class="btn-primary" id="respawn-btn">Main Lagi</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+<script src="game.js"></script>
+</body>
+  </html>
